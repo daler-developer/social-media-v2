@@ -76,62 +76,132 @@ export class CommentNotFoundException extends RequestException {
   }
 }
 
-export class UserAlreadyExistsException extends HttpException {
+export class UserAlreadyExistsException extends RequestException {
+  static errorType = 'user_already_exists_error'
+  static status = HttpStatus.BAD_REQUEST
+
   constructor() {
-    super('User alrerady exists', HttpStatus.BAD_REQUEST)
+    super({
+      message: 'User already exists',
+      errorType: UserAlreadyExistsException.errorType,
+      status: UserAlreadyExistsException.status,
+    })
   }
 }
 
-export class IncorrectPasswordException extends HttpException {
+export class IncorrectPasswordException extends RequestException {
+  static errorType = 'incorrect_password_error'
+  static status = HttpStatus.BAD_REQUEST
+
   constructor() {
-    super('Incorrect password', HttpStatus.BAD_REQUEST)
+    super({
+      message: 'Incorrect password',
+      errorType: IncorrectPasswordException.errorType,
+      status: IncorrectPasswordException.status,
+    })
   }
 }
 
-export class AlreadyFollowingUserException extends HttpException {
+export class AlreadyFollowingUserException extends RequestException {
+  static errorType = 'already_following_user_error'
+  static status = HttpStatus.BAD_REQUEST
+
   constructor() {
-    super('You already follow this user', HttpStatus.BAD_REQUEST)
+    super({
+      message: 'You already follow this user',
+      errorType: IncorrectPasswordException.errorType,
+      status: IncorrectPasswordException.status,
+    })
   }
 }
 
-export class NotFollowingUserYetException extends HttpException {
+export class NotFollowingUserYetException extends RequestException {
+  static errorType = 'not_following_user_yet_error'
+  static status = HttpStatus.BAD_REQUEST
+
   constructor() {
-    super('You are not following this user yet', HttpStatus.BAD_REQUEST)
+    super({
+      message: 'You are not following this user yet',
+      errorType: NotFollowingUserYetException.errorType,
+      status: NotFollowingUserYetException.status,
+    })
   }
 }
 
-export class AlreadyLikedPostException extends HttpException {
+export class AlreadyLikedPostException extends RequestException {
+  static errorType = 'already_liked_post_error'
+  static status = HttpStatus.BAD_REQUEST
+
   constructor() {
-    super('You aleady liked this post', HttpStatus.BAD_REQUEST)
+    super({
+      message: 'You already liked this post',
+      errorType: AlreadyLikedPostException.errorType,
+      status: AlreadyLikedPostException.status,
+    })
   }
 }
 
-export class NotLikedPostYetException extends HttpException {
+export class NotLikedPostYetException extends RequestException {
+  static errorType = 'not_liked_post_yet_error'
+  static status = HttpStatus.BAD_REQUEST
+
   constructor() {
-    super('You did not like this post yet', HttpStatus.BAD_REQUEST)
+    super({
+      message: 'You did not like this post yet',
+      errorType: NotLikedPostYetException.errorType,
+      status: NotLikedPostYetException.status,
+    })
   }
 }
 
-export class ForbiddenToDeletePostException extends HttpException {
+export class ForbiddenToDeletePostException extends RequestException {
+  static errorType = 'forbidden_to_delete_post_error'
+  static status = HttpStatus.FORBIDDEN
+
   constructor() {
-    super('You can only delete your posts', HttpStatus.BAD_REQUEST)
+    super({
+      message: 'You are forbidden to delete post',
+      errorType: ForbiddenToDeletePostException.errorType,
+      status: ForbiddenToDeletePostException.status,
+    })
   }
 }
 
-export class PostNotFoundException extends HttpException {
+export class PostNotFoundException extends RequestException {
+  static errorType = 'post_not_found_error'
+  static status = HttpStatus.NOT_FOUND
+
   constructor() {
-    super('Post was not found', HttpStatus.NOT_FOUND)
+    super({
+      message: 'Post not found',
+      errorType: PostNotFoundException.errorType,
+      status: PostNotFoundException.status,
+    })
   }
 }
 
-export class ForbiddenToDeleteCommentException extends HttpException {
+export class ForbiddenToDeleteCommentException extends RequestException {
+  static errorType = 'forbidden_to_delete_comment_error'
+  static status = HttpStatus.FORBIDDEN
+
   constructor() {
-    super('You cannot delete this comment', HttpStatus.FORBIDDEN)
+    super({
+      message: 'You are forbidden to delete comment',
+      errorType: ForbiddenToDeleteCommentException.errorType,
+      status: ForbiddenToDeleteCommentException.status,
+    })
   }
 }
 
-export class ForbiddenToEditCommentException extends HttpException {
+export class ForbiddenToEditCommentException extends RequestException {
+  static errorType = 'forbidden_to_edit_comment_error'
+  static status = HttpStatus.FORBIDDEN
+
   constructor() {
-    super('You cannot edit this comment', HttpStatus.FORBIDDEN)
+    super({
+      message: 'You are forbidden to edit comment',
+      errorType: ForbiddenToEditCommentException.errorType,
+      status: ForbiddenToEditCommentException.status,
+    })
   }
 }

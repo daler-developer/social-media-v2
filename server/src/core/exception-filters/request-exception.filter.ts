@@ -10,6 +10,10 @@ export class RequestExceptionFilter implements ExceptionFilter {
 
     console.log('request error')
 
-    response.status(exception.status).json(exception)
+    response.status(exception.status).json({
+      message: exception.message,
+      errorType: exception.errorType,
+      errors: exception.errors,
+    })
   }
 }

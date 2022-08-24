@@ -32,6 +32,7 @@ import { FileInterceptor } from '@nestjs/platform-express'
 import { avatarsStorage } from './avatars.storage'
 import { RequestService } from 'src/core/services/request.service'
 import { GetPostLikersQueryDto } from './dto/get-post-likers-query.dto'
+import { GetUserFollowersParamsDto } from './dto/get-user-followers-params.dto'
 
 @Controller('/api')
 export class UsersController {
@@ -51,7 +52,6 @@ export class UsersController {
   }
 
   @Get('/users/:_id')
-  @UseGuards(AuthRequiredGuard)
   async getUser(@Param('_id', ParseObjectIdPipe) _id: Types.ObjectId) {
     const user = await this.usersService.getUserByIdOrFailIfNotExists(_id)
 
@@ -74,19 +74,24 @@ export class UsersController {
     return { unfollowed: true }
   }
 
-  @Get('/users/:_id/followers')
-  @UseGuards(AuthRequiredGuard)
+  @Get('/users/:userId/followers')
   async getUserFollowers(
-    @Param('_id', ParseObjectIdPipe) userId: Types.ObjectId,
+    @Param(ValidationPipe) params: GetUserFollowersParamsDto,
     @Query(ValidationPipe) query: GetUserFollowersQueryDto
   ) {
+    const userId = new Types.ObjectId(params.userId)
+
     const doesNotExist = !(await this.usersService.userWithIdExists(userId))
 
     if (doesNotExist) {
       throw new UserNotFoundException()
     }
 
-    const users = await this.usersService.getUserFollowers({ userId, offset: query.offset, search: query.search })
+    const users = await this.usersService.getUserFollowers({
+      userId: userId,
+      offset: query.offset,
+      search: query.search,
+    })
 
     return {
       users,
