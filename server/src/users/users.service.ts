@@ -19,7 +19,7 @@ import { GetPostLikersQueryDto } from './dto/get-post-likers-query.dto'
 import { UpdateProfileDto } from './dto/update-profile.dto'
 import { IUser } from './schemas/user.schema'
 
-const USERS_LIMIT = 10
+const USERS_LIMIT = 1
 
 @Injectable()
 export class UsersService {

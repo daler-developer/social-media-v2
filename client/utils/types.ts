@@ -1,4 +1,7 @@
-export interface IUser {}
+export interface IUser {
+  _id: string
+  username: string
+}
 
 export interface IPost {}
 
