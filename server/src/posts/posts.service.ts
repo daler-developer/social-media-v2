@@ -7,7 +7,7 @@ import { AlreadyLikedPostException, ForbiddenToDeletePostException, NotLikedPost
 import { RequestService } from 'src/core/services/request.service'
 import { IPost } from './schemas/post.schema'
 
-const POSTS_LIMIT = 10
+const POSTS_LIMIT = 2
 
 @Injectable()
 export class PostsService {
@@ -64,11 +64,21 @@ export class PostsService {
         },
       },
       {
+        $lookup: {
+          as: 'comments',
+          from: 'comments',
+          foreignField: 'postId',
+          localField: '_id',
+        },
+      },
+      {
         $addFields: {
           creator: { $first: '$creators' },
+          numComments: { $size: '$comments' },
           numLikes: { $size: '$likes_ids' },
           ...(this.requestService.isAuthenticated && {
             isCreatedByCurrentUser: { $eq: ['$creatorId', this.requestService.currentUser._id] },
+            isLikedByCurrentUser: { $in: [this.requestService.currentUser._id, '$likes_ids'] },
           }),
         },
       },
@@ -87,6 +97,7 @@ export class PostsService {
           'creator.password',
           'creator.followings',
           'creator.posts',
+          'comments',
         ],
       },
     ])
@@ -154,9 +165,18 @@ export class PostsService {
         },
       },
       {
+        $lookup: {
+          as: 'comments',
+          from: 'comments',
+          foreignField: 'postId',
+          localField: '_id',
+        },
+      },
+      {
         $addFields: {
           creator: { $first: '$creators' },
           numLikes: { $size: '$likes_ids' },
+          numComments: { $size: '$comments' },
           ...(this.requestService.isAuthenticated && {
             isCreatedByCurrentUser: { $eq: ['$creatorId', this.requestService.currentUser._id] },
           }),
@@ -177,6 +197,7 @@ export class PostsService {
           'creator.password',
           'creator.followings',
           'creator.posts',
+          'comments',
         ],
       },
     ])
@@ -233,9 +254,18 @@ export class PostsService {
         },
       },
       {
+        $lookup: {
+          as: 'comments',
+          from: 'comments',
+          foreignField: 'postId',
+          localField: '_id',
+        },
+      },
+      {
         $addFields: {
           creator: { $first: '$creators' },
           numLikes: { $size: '$likes_ids' },
+          numComments: { $size: '$comments' },
           ...(this.requestService.isAuthenticated && {
             isCreatedByCurrentUser: { $eq: ['$creatorId', this.requestService.currentUser._id] },
           }),
@@ -250,6 +280,7 @@ export class PostsService {
           'creator.password',
           'creator.followings',
           'creator.posts',
+          'comments',
         ],
       },
     ])

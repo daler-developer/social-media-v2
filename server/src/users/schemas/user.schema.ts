@@ -28,6 +28,7 @@ export const UserSchema = new mongoose.Schema<IUser>(
     bio: {
       type: String,
       required: false,
+      default: () => '',
     },
     avatarUrl: {
       type: String,

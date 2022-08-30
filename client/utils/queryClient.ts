@@ -4,7 +4,9 @@ export default new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: Infinity,
-      retry: 0,
+      retry: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
       cacheTime: Infinity,
     },
   },

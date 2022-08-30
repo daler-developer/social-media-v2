@@ -8,17 +8,22 @@ import { ServeStaticModule } from '@nestjs/serve-static'
 import { CommentsModule } from './comments/comments.module'
 import { RequestService } from './core/services/request.service'
 import { PopulateUserMiddleware } from './core/middleware/populate-user.middleware'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 
 @Global()
 @Module({
   imports: [
+    ConfigModule.forRoot({ envFilePath: '.env.local', isGlobal: true }),
     AuthModule,
     UsersModule,
     PostsModule,
     CommentsModule,
-    MongooseModule.forRoot(
-      'mongodb+srv://daler-developer:2000909k@cluster0.w93fir2.mongodb.net/?retryWrites=true&w=majority'
-    ),
+    MongooseModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_URL'),
+      }),
+    }),
     ServeStaticModule.forRoot({
       rootPath: path.join(__dirname, 'uploads'),
       serveRoot: '/uploads',

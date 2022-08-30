@@ -8,5 +8,8 @@ module.exports = {
     extend: {},
   },
   variants: {},
-  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
+  plugins: [],
+  corePlugins: {
+    preflight: false
+  }
 };

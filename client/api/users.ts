@@ -73,12 +73,14 @@ export const updateProfile = async ({
   username,
   removeAvatar,
   avatar,
+  bio,
 }: {
   firstName?: string
   lastName?: string
   username?: string
-  removeAvatar?: boolean
+  removeAvatar: boolean
   avatar?: File
+  bio?: string
 }) => {
   const form = new FormData()
 
@@ -94,12 +96,13 @@ export const updateProfile = async ({
   if (avatar) {
     form.append('avatar', avatar)
   }
-  if (removeAvatar !== undefined) {
-    if (removeAvatar) {
-      form.append('removeAvatar', 'yes')
-    } else {
-      form.append('removeAvatar', 'no')
-    }
+  if (bio) {
+    form.append('bio', bio)
+  }
+  if (removeAvatar) {
+    form.append('removeAvatar', 'yes')
+  } else {
+    form.append('removeAvatar', 'no')
   }
 
   return await apiClient.patch<{ user: IUser }>(

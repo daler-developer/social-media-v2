@@ -19,7 +19,7 @@ import { GetPostLikersQueryDto } from './dto/get-post-likers-query.dto'
 import { UpdateProfileDto } from './dto/update-profile.dto'
 import { IUser } from './schemas/user.schema'
 
-const USERS_LIMIT = 1
+const USERS_LIMIT = 2
 
 @Injectable()
 export class UsersService {
@@ -118,7 +118,7 @@ export class UsersService {
             currentUserFollows: {
               $cond: {
                 if: { $eq: [this.requestService.currentUser._id, '$_id'] },
-                then: null,
+                then: '$$REMOVE',
                 else: { $in: [this.requestService.currentUser._id, '$followers_ids'] },
               },
             },
@@ -454,6 +454,7 @@ export class UsersService {
     firstName,
     lastName,
     username,
+    bio,
     removeAvatar = false,
     file,
   }: UpdateProfileDto & { userId: Types.ObjectId; file?: Express.Multer.File }) {
@@ -470,6 +471,7 @@ export class UsersService {
           ...(firstName && { firstName }),
           ...(lastName && { lastName }),
           ...(username && { username }),
+          ...(bio && { bio }),
           ...(!removeAvatar && file && { avatarUrl: this.generateAvatarUrl(file.filename) }),
         },
         $unset: {

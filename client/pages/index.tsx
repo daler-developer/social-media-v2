@@ -1,22 +1,39 @@
+import PostsList from '@/components/posts-list/PostsList'
+import { useQueryClient } from '@tanstack/react-query'
 import useGetFeedPostsQuery from 'hooks/queries/useGetFeedPostsQuery'
-import useGetMeQuery from 'hooks/queries/useGetMeQuery'
-import useGetUserFollowersQuery from 'hooks/queries/useGetUserFollowersQuery'
-import useGetUserQuery from 'hooks/queries/useGetUserQuery'
 import { useEffect, useState } from 'react'
+import { IPost } from 'utils/types'
 
 const Home = () => {
-  const userQuery = useGetUserQuery({ userId: '6304be478d6be4f7c8e6917b' })
-
   const [search, setSearch] = useState('')
+
+  const postsQuery = useGetFeedPostsQuery({
+    ...(search && { search }),
+  })
+
+  const allPosts = postsQuery.data?.pages.reduce(
+    (acc, item) => [...acc, ...item],
+    []
+  )
+
+  const handleFetchMore = () => {
+    postsQuery.fetchNextPage()
+  }
+
+  const handleSearch = (v: string) => {
+    setSearch(v)
+  }
 
   return (
     <div>
-      {/* <input
-        type='text'
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <button onClick={() => followers.fetchNextPage()}>more</button> */}
+      <div className='max-w-[500px] mx-auto'>
+        <PostsList
+          onSearch={handleSearch}
+          posts={allPosts}
+          isFetching={postsQuery.isFetching}
+          onFetchMore={handleFetchMore}
+        />
+      </div>
     </div>
   )
 }

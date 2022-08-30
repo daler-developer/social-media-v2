@@ -51,7 +51,7 @@ export const getPostsUserCreated = async ({
   offset?: number
   search?: string
 }) => {
-  return await apiClient.get<{ post: IPost[] }>(`/api/users/${userId}/posts`, {
+  return await apiClient.get<{ posts: IPost[] }>(`/api/users/${userId}/posts`, {
     params: { offset, search },
   })
 }

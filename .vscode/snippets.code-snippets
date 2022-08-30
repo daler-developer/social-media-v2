@@ -88,7 +88,6 @@
 	"Component": {
 		"prefix": "component",
 		"body": [
-			"import cn from 'classnames'",
 			"",
 			"interface IProps {",
 			"  $1",
@@ -99,6 +98,12 @@
 			"}",
 			"",
 			"export default $TM_FILENAME_BASE",
+		]
+	},
+	"Border": {
+		"prefix": "border",
+		"body": [
+			"border border-solid border-black$0"
 		]
 	},
 }

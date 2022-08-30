@@ -17,7 +17,7 @@ export class CommentsController {
 
   @Get('/posts/:postId/comments')
   async getPostComments(
-    @Query() query: GetPostCommentsQueryDto,
+    @Query(ValidationPipe) query: GetPostCommentsQueryDto,
     @Param('postId', ParseObjectIdPipe) postId: Types.ObjectId
   ) {
     const comments = await this.commentsService.getPostComments({ postId, offset: query.offset })

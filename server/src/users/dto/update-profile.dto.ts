@@ -15,6 +15,10 @@ export class UpdateProfileDto {
   lastName?: string
 
   @IsOptional()
+  @IsString()
+  bio?: string
+
+  @IsOptional()
   @Transform(({ value }) => {
     if (value === 'yes') {
       return true
