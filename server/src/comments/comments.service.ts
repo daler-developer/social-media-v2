@@ -77,7 +77,6 @@ export class CommentsService {
           'creator.password',
           'creator.followings',
           'creator.posts',
-          'postId',
         ],
       },
       {

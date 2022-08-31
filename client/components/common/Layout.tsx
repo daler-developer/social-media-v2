@@ -17,7 +17,7 @@ const Layout = ({ children }: IProps) => {
   const isAuthenticated = useIsAuthenticated()
 
   return (
-    <div className='py-[70px]'>
+    <div className='min-h-screen py-[70px] bg-gray-50'>
       <Header />
       <Container>{children}</Container>
       <LoginModal />

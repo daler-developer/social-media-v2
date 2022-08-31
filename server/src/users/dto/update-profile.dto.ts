@@ -4,18 +4,26 @@ import { IsInt, IsNumberString, IsOptional, IsString, MaxLength, Min, MinLength 
 export class UpdateProfileDto {
   @IsOptional()
   @IsString()
+  @MinLength(3)
+  @MaxLength(20)
   username?: string
 
   @IsOptional()
   @IsString()
+  @MinLength(3)
+  @MaxLength(20)
   firstName?: string
 
   @IsOptional()
   @IsString()
+  @MinLength(3)
+  @MaxLength(20)
   lastName?: string
 
   @IsOptional()
   @IsString()
+  @MinLength(3)
+  @MaxLength(20)
   bio?: string
 
   @IsOptional()

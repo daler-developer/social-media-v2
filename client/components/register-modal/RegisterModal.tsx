@@ -21,9 +21,9 @@ interface IFormValues {
 
 const validationSchema = yup.object({
   username: yup.string().required().min(3).max(20),
-  password: yup.string().required().min(3).max(20),
-  firstName: yup.string().required().min(3).max(20),
-  lastName: yup.string().required().min(3).max(20),
+  firstName: yup.string().required().min(1).max(20),
+  lastName: yup.string().required().min(1).max(20),
+  password: yup.string().required().min(8).max(20),
 })
 
 const RegisterModal = () => {
@@ -122,6 +122,7 @@ const RegisterModal = () => {
           <Input
             className='mt-[10px]'
             placeholder='Password'
+            type='password'
             {...(form.formState.errors.password && { status: 'error' })}
             {...field}
           />

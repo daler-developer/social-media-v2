@@ -25,7 +25,7 @@ interface IFormValues {
 }
 
 const validationSchema = yup.object({
-  text: yup.string().required().min(3).max(100),
+  text: yup.string().required().min(1).max(100),
 })
 
 const EditForm = ({ comment, onEditedComment, onHideForm }: IProps) => {
@@ -33,17 +33,9 @@ const EditForm = ({ comment, onEditedComment, onHideForm }: IProps) => {
     commentId: comment._id,
   })
 
-  // const inputRef = useRef<HTMLInputElement | null>(null)
-
   useEffect(() => {
     form.setValue('text', comment.text)
   }, [comment.text])
-
-  // useEffect(() => {
-  //   if (!onEditedComment && inputRef.current) {
-  //     inputRef.current.focus()
-  //   }
-  // }, [onEditedComment, inputRef.current])
 
   const form = useForm<IFormValues>({
     resolver: yupResolver(validationSchema),

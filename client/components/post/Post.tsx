@@ -58,9 +58,9 @@ const Post = ({ post }: IProps) => {
   const formatedDate = formatDate(post.createdAt)
 
   return (
-    <div className='shadow-lg'>
+    <div className='border border-solid bg-white border-gray-300 rounded-[4px]'>
       {/* Header */}
-      <div className='p-[10px] flex items-center justify-between border-b border-gray-300'>
+      <div className='p-[10px] flex items-center justify-between'>
         <NextLink href={`/users/${post.creator._id}`} passHref>
           <a className='flex items-center gap-[4px]'>
             <Avatar src={post.creator.avatarUrl} />
@@ -75,7 +75,7 @@ const Post = ({ post }: IProps) => {
       </div>
       {/* Image */}
       <div className='w-full aspect-square relative'>
-        <NextImage src={post.imageUrl} layout='fill' />
+        <NextImage className='object-cover' src={post.imageUrl} layout='fill' />
       </div>
       {/* Body */}
       <div className='p-[10px]'>

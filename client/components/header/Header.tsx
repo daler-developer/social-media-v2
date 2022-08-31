@@ -11,9 +11,7 @@ import useOpenLoginModal from 'hooks/useOpenLoginModal'
 import NextLink from 'next/link'
 import Avatar from '../avatar/Avatar'
 
-interface IProps {}
-
-const Header = ({}: IProps) => {
+const Header = () => {
   const isAuthenticated = useIsAuthenticated()
 
   const dispatch = useTypedDispatch()
@@ -31,7 +29,7 @@ const Header = ({}: IProps) => {
   }
 
   return (
-    <div className='fixed top-0 left-0 w-full shadow-lg z-40 bg-white'>
+    <div className='fixed top-0 left-0 w-full z-40 bg-white border border-solid border-gray-300'>
       <Container>
         <div className='h-[50px] flex items-center justify-between'>
           {/* Left */}

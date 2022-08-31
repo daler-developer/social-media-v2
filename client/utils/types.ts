@@ -48,6 +48,7 @@ export interface IComment {
   createdAt: string
   creator: IUser
   isCreatedByCurrentUser: boolean
+  postId: string
 }
 
 export type AxiosErrorResponseType = AxiosError<{

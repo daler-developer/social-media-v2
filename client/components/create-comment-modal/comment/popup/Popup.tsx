@@ -9,7 +9,7 @@ interface IProps {
 
 const Popup = ({ comment, onEditClick }: IProps) => {
   const deleteCommentMutation = useDeletePostCommentMutation({
-    commentId: comment._id,
+    comment,
   })
 
   const handleDelete = async () => {

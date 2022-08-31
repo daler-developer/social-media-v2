@@ -15,8 +15,6 @@ interface IParams {
 }
 
 export default () => {
-  const queryClient = useQueryClient()
-
   const mutation = useMutation<IData, AxiosErrorResponseType, IParams>(
     async (credentials) => {
       const { data } = await authApi.login(credentials)
@@ -27,7 +25,7 @@ export default () => {
       onSuccess(data) {
         localStorage.setItem('accessToken', data.accessToken)
 
-        queryClient.setQueryData(['users', 'me'], data.user)
+        window.location.reload()
       },
     }
   )

@@ -1,11 +1,11 @@
-import { Type } from 'class-transformer'
+import { Transform, Type } from 'class-transformer'
 import { IsInt, IsOptional, IsString, MaxLength, Min } from 'class-validator'
 
 export class GetFeedPostsQueryDto {
   @IsOptional()
   @IsInt()
   @Min(0)
-  @Type(() => Number)
+  @Transform(({ value }) => Number(value))
   offset?: number
 
   @IsOptional()

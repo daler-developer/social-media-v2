@@ -19,7 +19,7 @@ interface IFormValues {
 }
 
 const validationSchema = yup.object({
-  text: yup.string().required().min(3).max(100),
+  text: yup.string().required().min(1).max(100),
 })
 
 const CreateCommentForm = forwardRef(
