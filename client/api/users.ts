@@ -96,7 +96,7 @@ export const updateProfile = async ({
   if (avatar) {
     form.append('avatar', avatar)
   }
-  if (bio) {
+  if (typeof bio === 'string') {
     form.append('bio', bio)
   }
   if (removeAvatar) {

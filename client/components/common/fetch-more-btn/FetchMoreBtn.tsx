@@ -3,7 +3,7 @@ import { Button } from 'antd'
 import { ComponentPropsWithoutRef } from 'react'
 
 const FetchMoreBtn = (props: ComponentPropsWithoutRef<typeof Button>) => {
-  return <Button shape='circle' icon={<PlusIcon />} {...props} />
+  return <Button role='button' shape='circle' icon={<PlusIcon />} {...props} />
 }
 
 export default FetchMoreBtn

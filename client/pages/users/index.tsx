@@ -1,5 +1,5 @@
 import FetchMoreBtn from '@/components/common/fetch-more-btn/FetchMoreBtn'
-import UserCard from '@/components/user-card/UserCard'
+import UserCard from '@/components/users-list/user-card/UserCard'
 import UsersList from '@/components/users-list/UsersList'
 import { Input, Spin } from 'antd'
 import useGetFeedUsersQuery from 'hooks/queries/useGetFeedUsersQuery'

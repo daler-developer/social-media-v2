@@ -4,28 +4,28 @@ import Document, {
   Head,
   Main,
   NextScript,
-} from "next/document";
+} from 'next/document'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
-    const initialProps = await Document.getInitialProps(ctx);
+    const initialProps = await Document.getInitialProps(ctx)
 
-    return initialProps;
+    return initialProps
   }
 
   render() {
     return (
       <Html>
         <Head>
-          {/* Favicons, Google site verification and other common meta tags across the site. */}
+          <title>Social Media</title>
         </Head>
         <body>
           <Main />
           <NextScript />
         </body>
       </Html>
-    );
+    )
   }
 }
 
-export default MyDocument;
+export default MyDocument

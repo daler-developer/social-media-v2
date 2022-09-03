@@ -17,17 +17,11 @@ const PopupMenu = ({ post }: IProps) => {
   const items: any[] = []
 
   if (post.isCreatedByCurrentUser) {
-    items.push(
-      {
-        key: 1,
-        danger: true,
-        label: <div onClick={handleDelete}>Delete</div>,
-      },
-      {
-        key: 2,
-        label: <div>Edit</div>,
-      }
-    )
+    items.push({
+      key: 1,
+      danger: true,
+      label: <div onClick={handleDelete}>Delete</div>,
+    })
   }
 
   return <Menu items={items} />

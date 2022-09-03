@@ -51,6 +51,7 @@ const LoginModal = () => {
 
   return (
     <Modal
+      data-testid='login-modal'
       title='Login'
       visible={isVisible}
       onCancel={() => closeModal()}
@@ -63,7 +64,7 @@ const LoginModal = () => {
         >
           Login
         </Button>,
-        <Button key='cancel-btn' htmlType='button'>
+        <Button key='cancel-btn' htmlType='button' onClick={() => closeModal()}>
           Cancel
         </Button>,
       ]}

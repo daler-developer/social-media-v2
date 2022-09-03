@@ -13,6 +13,7 @@ import { FormEvent, useEffect, useRef } from 'react'
 import NextImage from 'next/image'
 import { DeleteOutlined, UploadOutlined } from '@ant-design/icons'
 import useCreatePostMutation from 'hooks/mutations/useCreatePostMutation'
+import useModals from 'hooks/useModals'
 
 interface IFormValues {
   text: string
@@ -27,7 +28,7 @@ const validationSchema = yup.object({
 const CreatePostModal = () => {
   const createPostMutation = useCreatePostMutation()
 
-  const dispatch = useTypedDispatch()
+  const modals = useModals()
 
   const form = useForm<IFormValues>({
     resolver: yupResolver(validationSchema),
@@ -37,10 +38,6 @@ const CreatePostModal = () => {
 
   useWatch({ control: form.control, name: 'image' })
 
-  const isVisible =
-    useTypedSelector(uiSelectors.selectCurrentActiveModal) ===
-    ModalsEnum.CREATE_POST
-
   useEffect(() => {
     form.register('image')
   }, [])
@@ -48,17 +45,7 @@ const CreatePostModal = () => {
   const handleSubmit = async (data: IFormValues) => {
     await createPostMutation.mutateAsync(data)
 
-    closeModal()
-  }
-
-  const closeModal = () => {
-    dispatch(uiActions.closedCurrentActiveModal())
-    resetModal()
-  }
-
-  const resetModal = () => {
-    form.reset()
-    resetFileInput()
+    closeAndResetModal()
   }
 
   const resetFileInput = () => {
@@ -74,6 +61,14 @@ const CreatePostModal = () => {
     form.resetField('image')
   }
 
+  const handleCancel = () => closeAndResetModal()
+
+  const closeAndResetModal = () => {
+    modals.closeCurrentActiveModal()
+    form.reset()
+    resetFileInput()
+  }
+
   const hasImageError = !!form.formState.errors.image
   const imageErrorMessage = form.formState.errors.image?.message
   const isSubmittingForm = form.formState.isSubmitting
@@ -85,8 +80,8 @@ const CreatePostModal = () => {
   return (
     <Modal
       title='Create post'
-      visible={isVisible}
-      onCancel={() => closeModal()}
+      visible={modals.isCreatePostModalVisible}
+      onCancel={handleCancel}
       footer={[
         <Button
           key='login'
@@ -96,7 +91,7 @@ const CreatePostModal = () => {
         >
           Create
         </Button>,
-        <Button key='cancel-btn' htmlType='button' onClick={() => closeModal()}>
+        <Button key='cancel-btn' htmlType='button' onClick={handleCancel}>
           Cancel
         </Button>,
       ]}

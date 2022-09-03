@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Checkbox, Input, Modal } from 'antd'
 import useUpdateProfileMutation from 'hooks/mutations/useUpdateProfileMutation'
 import useGetMeQuery from 'hooks/queries/useGetMeQuery'
-import useModal from 'hooks/useModal'
+import useModals from 'hooks/useModals'
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { ModalsEnum } from 'redux/slices/ui-slice/uiSlice'
@@ -19,14 +19,21 @@ interface IFormValues {
   avatar?: File
 }
 
-const validationSchema = yup.object({})
+const validationSchema = yup.object({
+  username: yup.string().trim().required().min(3).max(20),
+  firstName: yup.string().trim().required().min(1).max(20),
+  lastName: yup.string().trim().required().min(1).max(20),
+  bio: yup.string().trim().max(150),
+  removeAvatar: yup.bool().required(),
+  avatar: yup.mixed().optional(),
+})
 
 const UpdateProfileModal = () => {
   const updateProfileMutation = useUpdateProfileMutation()
 
   const fileInputRef = useRef<HTMLInputElement>(null!)
 
-  const modal = useModal(ModalsEnum.UPDATE_PROFILE)
+  const modals = useModals()
 
   const form = useForm<IFormValues>({
     resolver: yupResolver(validationSchema),
@@ -42,14 +49,14 @@ const UpdateProfileModal = () => {
     : meQuery.data!.avatarUrl
 
   useEffect(() => {
-    if (modal.isVisible) {
+    if (modals.isUpdateProfileModalVisible) {
       form.setValue('username', meQuery.data!.username)
       form.setValue('firstName', meQuery.data!.firstName)
       form.setValue('lastName', meQuery.data!.lastName)
       form.setValue('bio', meQuery.data!.bio)
       form.setValue('removeAvatar', false)
     }
-  }, [modal.isVisible])
+  }, [modals.isUpdateProfileModalVisible])
 
   const getUpdatedProps = (values: IFormValues) => {
     const updatedProps: any = {}
@@ -71,23 +78,28 @@ const UpdateProfileModal = () => {
     }
     updatedProps.removeAvatar = values.removeAvatar
 
+    console.log(updatedProps)
+
     return updatedProps
   }
 
   const handleSubmit = async (values: IFormValues) => {
+    console.log(values)
     await updateProfileMutation.mutateAsync(getUpdatedProps(values))
-    modal.close()
+    modals.closeCurrentActiveModal()
   }
 
   const handleFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     form.setValue('avatar', e.target.files![0])
   }
 
+  const handleCancel = () => modals.closeCurrentActiveModal()
+
   return (
     <Modal
       title='Update profile'
-      visible={modal.isVisible}
-      onCancel={() => modal.close()}
+      visible={modals.isUpdateProfileModalVisible}
+      onCancel={handleCancel}
       footer={[
         <Button
           key='login'
@@ -97,11 +109,7 @@ const UpdateProfileModal = () => {
         >
           Update
         </Button>,
-        <Button
-          key='cancel-btn'
-          htmlType='button'
-          onClick={() => modal.close()}
-        >
+        <Button key='cancel-btn' htmlType='button' onClick={handleCancel}>
           Cancel
         </Button>,
       ]}

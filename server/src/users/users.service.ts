@@ -19,7 +19,7 @@ import { GetPostLikersQueryDto } from './dto/get-post-likers-query.dto'
 import { UpdateProfileDto } from './dto/update-profile.dto'
 import { IUser } from './schemas/user.schema'
 
-const USERS_LIMIT = 2
+const USERS_LIMIT = 10
 
 @Injectable()
 export class UsersService {
@@ -471,7 +471,8 @@ export class UsersService {
           ...(firstName && { firstName }),
           ...(lastName && { lastName }),
           ...(username && { username }),
-          ...(bio && { bio }),
+          // bio might be empty string
+          ...(typeof bio === 'string' && { bio }),
           ...(!removeAvatar && file && { avatarUrl: this.generateAvatarUrl(file.filename) }),
         },
         $unset: {

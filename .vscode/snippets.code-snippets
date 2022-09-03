@@ -106,4 +106,36 @@
 			"border border-solid border-black$0"
 		]
 	},
+	"describe block": {
+		"scope": "javascript,typescript,typescriptreact",
+		"prefix": "desc",
+		"body": [
+			"describe('$1', () => { ",
+			"  test('$2', () => {",
+			"    $3",
+			"  }) ",
+			"})",
+		],
+		"description": "Log output to console"
+	},
+	"test block": {
+		"scope": "javascript,typescript,typescriptreact",
+		"prefix": "test",
+		"body": [
+			"test('$1', () => {",
+			"  $0",
+			"}) ",
+		],
+		"description": "Log output to console"
+	},
+	"test imports": {
+		"scope": "javascript,typescript,typescriptreact",
+		"prefix": "testimp",
+		"body": [
+			"import { screen, render } from '@testing-library/react'",
+			"import userEvent from '@testing-library/user-event'",
+			"import $1 from './$1'$0",
+		],
+		"description": "Log output to console"
+	},
 }

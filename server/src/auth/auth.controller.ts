@@ -21,16 +21,13 @@ export class AuthController {
       throw new UserAlreadyExistsException()
     }
     const user = await this.usersService.createUser(body)
-    const { accessToken, refreshToken } = this.authService.generateAccessAndRefreshTokens({
+    const accessToken = this.authService.generateAccessToken({
       userId: new Types.ObjectId(user._id),
     })
-
-    res.cookie('refreshToken', refreshToken)
 
     return res.status(200).json({
       user,
       accessToken,
-      refreshToken,
     })
   }
 
@@ -47,21 +44,8 @@ export class AuthController {
       throw new IncorrectPasswordException()
     }
 
-    const { accessToken, refreshToken } = this.authService.generateAccessAndRefreshTokens({ userId: candidate._id })
+    const accessToken = this.authService.generateAccessToken({ userId: candidate._id })
 
-    res.cookie('refreshToken', refreshToken)
-
-    return res.status(200).json({ user: candidate, accessToken, refreshToken })
-  }
-
-  @Post('/auth/refreshToken')
-  async refreshToken(@Body(ValidationPipe) body: RefreshTokenBodyDto, @Res() res: Response) {
-    const decoded = this.authService.verifyToken(body.token)
-
-    const { accessToken, refreshToken } = this.authService.generateAccessAndRefreshTokens(decoded.userId)
-
-    res.cookie('refreshToken', refreshToken)
-
-    return res.status(200).json({ accessToken, refreshToken })
+    return res.status(200).json({ user: candidate, accessToken })
   }
 }

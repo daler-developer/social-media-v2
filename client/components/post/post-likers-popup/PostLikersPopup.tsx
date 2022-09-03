@@ -42,7 +42,7 @@ const PostLikersPopup = ({ isOpen, post }: IProps) => {
   const showNotUsersText = !hasUsers && !usersQuery.isFetching
 
   return (
-    <div className='bg-white border border-solid border-black min-h-[40px]'>
+    <div className='min-h-[40px] border border-solid bg-white border-gray-300 rounded-[4px] p-[4px]'>
       {showNotUsersText && (
         <div className='text-center'>
           <Typography.Text type='secondary'>No likers</Typography.Text>
@@ -51,7 +51,7 @@ const PostLikersPopup = ({ isOpen, post }: IProps) => {
       {allUsers &&
         allUsers.map((user) => (
           <NextLink href={`/users/${user._id}`} passHref>
-            <div className='p-[3px]'>
+            <div className='text-center cursor-pointer'>
               <Typography.Text>
                 {user.firstName} {user.lastName}
               </Typography.Text>

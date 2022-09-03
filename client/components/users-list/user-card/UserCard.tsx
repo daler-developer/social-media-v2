@@ -5,10 +5,10 @@ import { IUser } from 'utils/types'
 import NextLink from 'next/link'
 import { FormEvent, MouseEvent, SyntheticEvent } from 'react'
 import { UserOutlined } from '@ant-design/icons'
-import Avatar from '../avatar/Avatar'
-import FollowBtn from '../common/follow-btn/FollowBtn'
+import Avatar from '../../avatar/Avatar'
+import FollowBtn from '../../common/follow-btn/FollowBtn'
 import useIsAuthenticated from 'hooks/useIsAuthenticated'
-import UnfollowBtn from '../common/unfollow-btn/UnfollowBtn'
+import UnfollowBtn from '../../common/unfollow-btn/UnfollowBtn'
 
 interface IProps {
   user: IUser
@@ -21,7 +21,7 @@ const UserCard = ({ user }: IProps) => {
 
   return (
     <NextLink href={`/users/${user._id}`} passHref>
-      <div className='p-[20px] flex items-center justify-between shadow-md cursor-pointer'>
+      <div className='p-[20px] flex items-center justify-between cursor-pointer border border-solid bg-white border-gray-300 rounded-[4px]'>
         <div className='flex items-center gap-[15px]'>
           <Avatar size={30} src={user.avatarUrl} />
           {user.username}

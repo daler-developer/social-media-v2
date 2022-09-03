@@ -21,6 +21,7 @@ import { ModalsEnum } from 'redux/slices/ui-slice/uiSlice'
 import { formatDate } from 'utils/helpers'
 import MenuBtn from '../common/menu-btn/MenuBtn'
 import Avatar from '../avatar/Avatar'
+import useModals from 'hooks/useModals'
 
 interface IProps {
   post: IPost
@@ -36,10 +37,16 @@ const Post = ({ post }: IProps) => {
 
   const dispatch = useTypedDispatch()
 
+  const modals = useModals()
+
   const commentInputRef = useRef<HTMLInputElement>(null!)
 
   const handleLikePost = () => {
-    likePostMutation.mutate({ postId: post._id })
+    if (isAuthenticated) {
+      likePostMutation.mutate({ postId: post._id })
+    } else if (!isAuthenticated) {
+      modals.openLoginModal()
+    }
   }
 
   const handleUnlikePost = () => {
@@ -47,7 +54,7 @@ const Post = ({ post }: IProps) => {
   }
 
   const handleOpenComments = () => {
-    dispatch(uiActions.changedCurrentActiveModal(ModalsEnum.POST_COMMENTS))
+    modals.openCommentsModal()
     dispatch(uiActions.setPostCommentsParams({ postId: post._id }))
   }
 
@@ -56,6 +63,8 @@ const Post = ({ post }: IProps) => {
   }
 
   const formatedDate = formatDate(post.createdAt)
+
+  const shouldShowPopup = isAuthenticated && post.isCreatedByCurrentUser
 
   return (
     <div className='border border-solid bg-white border-gray-300 rounded-[4px]'>
@@ -67,7 +76,7 @@ const Post = ({ post }: IProps) => {
             <Typography.Text>{post.creator.username}</Typography.Text>
           </a>
         </NextLink>
-        {isAuthenticated && (
+        {shouldShowPopup && (
           <Dropdown overlay={<PopupMenu post={post} />}>
             <MenuBtn />
           </Dropdown>

@@ -2,7 +2,7 @@ import { PlusOutlined as PlusIcon } from '@ant-design/icons'
 import { useQueryClient } from '@tanstack/react-query'
 import { Button, Modal, Spin, Typography } from 'antd'
 import useGetPostCommentsQuery from 'hooks/queries/useGetPostCommentsQuery'
-import useModal from 'hooks/useModal'
+import useModals from 'hooks/useModals'
 import useTypedSelector from 'hooks/useTypedSelector'
 import { useEffect } from 'react'
 import { ModalsEnum } from 'redux/slices/ui-slice/uiSlice'
@@ -12,9 +12,7 @@ import CreateCommentForm from '../create-comment-form/CreateCommentForm'
 import Comment from './comment/Comment'
 
 const CreateCommentModal = () => {
-  const modal = useModal(ModalsEnum.POST_COMMENTS)
-
-  const queryClient = useQueryClient()
+  const modals = useModals()
 
   const params = useTypedSelector(uiSelectors.selectPostCommentsParams)
 
@@ -22,12 +20,6 @@ const CreateCommentModal = () => {
     postId: params.postId as string,
     enabled: !!params.postId,
   })
-
-  // useEffect(() => {
-  //   if (!modal.isVisible && params.postId) {
-  //     queryClient.resetQueries(['comments', 'list', { postId: params.postId }])
-  //   }
-  // }, [modal.isVisible, params.postId])
 
   const allComments = commentsQuery.data?.pages.reduce(
     (acc, item) => [...acc, ...item],
@@ -40,8 +32,8 @@ const CreateCommentModal = () => {
   return (
     <Modal
       title='Comments'
-      onCancel={() => modal.close()}
-      visible={modal.isVisible}
+      onCancel={() => modals.closeCurrentActiveModal()}
+      visible={modals.isCommentsModalVisible}
       footer={null}
     >
       {params.postId && (

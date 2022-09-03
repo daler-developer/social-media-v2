@@ -1,7 +1,7 @@
 import { Input, Spin, Typography } from 'antd'
 import { IUser } from 'utils/types'
 import FetchMoreBtn from '../common/fetch-more-btn/FetchMoreBtn'
-import UserCard from '../user-card/UserCard'
+import UserCard from './user-card/UserCard'
 
 interface IProps {
   users?: IUser[]

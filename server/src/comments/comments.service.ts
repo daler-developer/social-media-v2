@@ -5,7 +5,7 @@ import { CommentNotFoundException } from 'src/core/errors'
 import { RequestService } from 'src/core/services/request.service'
 import { IComment } from './schema/comment.schema'
 
-const COMMENTS_LIMIT = 2
+const COMMENTS_LIMIT = 10
 
 @Injectable()
 export class CommentsService {

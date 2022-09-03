@@ -10,20 +10,19 @@ export class UpdateProfileDto {
 
   @IsOptional()
   @IsString()
-  @MinLength(3)
+  @MinLength(1)
   @MaxLength(20)
   firstName?: string
 
   @IsOptional()
   @IsString()
-  @MinLength(3)
+  @MinLength(1)
   @MaxLength(20)
   lastName?: string
 
   @IsOptional()
   @IsString()
-  @MinLength(3)
-  @MaxLength(20)
+  @MaxLength(150)
   bio?: string
 
   @IsOptional()

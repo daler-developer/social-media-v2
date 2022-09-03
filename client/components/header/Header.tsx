@@ -10,21 +10,20 @@ import { ModalsEnum } from 'redux/slices/ui-slice/uiSlice'
 import useOpenLoginModal from 'hooks/useOpenLoginModal'
 import NextLink from 'next/link'
 import Avatar from '../avatar/Avatar'
+import useModals from 'hooks/useModals'
 
 const Header = () => {
   const isAuthenticated = useIsAuthenticated()
 
-  const dispatch = useTypedDispatch()
-
-  const openLoginModal = useOpenLoginModal()
+  const modals = useModals()
 
   const getMeQuery = useGetMeQuery({ enabled: false })
 
   const handleNewPost = () => {
     if (isAuthenticated) {
-      dispatch(uiActions.changedCurrentActiveModal(ModalsEnum.CREATE_POST))
+      modals.openCreatePostModal()
     } else if (!isAuthenticated) {
-      openLoginModal()
+      modals.openLoginModal()
     }
   }
 
@@ -47,22 +46,14 @@ const Header = () => {
               <Button
                 type='primary'
                 ghost
-                onClick={() =>
-                  dispatch(
-                    uiActions.changedCurrentActiveModal(ModalsEnum.LOGIN)
-                  )
-                }
+                onClick={() => modals.openLoginModal()}
               >
                 Login
               </Button>
               <Button
                 type='primary'
                 ghost
-                onClick={() =>
-                  dispatch(
-                    uiActions.changedCurrentActiveModal(ModalsEnum.REGISTER)
-                  )
-                }
+                onClick={() => modals.openRegisterModal()}
               >
                 Register
               </Button>
@@ -79,11 +70,9 @@ const Header = () => {
           </div>
 
           {/* Right */}
-          <div className=''>
-            <Button type='primary' shape='round' onClick={handleNewPost}>
-              New Post
-            </Button>
-          </div>
+          <Button type='primary' shape='round' onClick={handleNewPost}>
+            New Post
+          </Button>
         </div>
       </Container>
     </div>

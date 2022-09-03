@@ -7,7 +7,7 @@ import { AlreadyLikedPostException, ForbiddenToDeletePostException, NotLikedPost
 import { RequestService } from 'src/core/services/request.service'
 import { IPost } from './schemas/post.schema'
 
-const POSTS_LIMIT = 2
+const POSTS_LIMIT = 10
 
 @Injectable()
 export class PostsService {

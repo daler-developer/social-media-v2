@@ -5,15 +5,12 @@ import { NotAuthenticatedException } from 'src/core/errors'
 
 @Injectable()
 export class AuthService {
-  generateAccessAndRefreshTokens({ userId }: { userId: Types.ObjectId }) {
+  generateAccessToken({ userId }: { userId: Types.ObjectId }) {
     const accessToken = jwt.sign({ userId }, 'jwt_secret', {
       expiresIn: '2 days',
     })
-    const refreshToken = jwt.sign({ userId }, 'jwt_secret', {
-      expiresIn: '3 days',
-    })
 
-    return { accessToken, refreshToken }
+    return accessToken
   }
 
   verifyToken(token: string) {

@@ -69,7 +69,7 @@ const RegisterModal = () => {
         >
           Register
         </Button>,
-        <Button key='cancel-btn' htmlType='button'>
+        <Button key='cancel-btn' htmlType='button' onClick={() => closeModal()}>
           Cancel
         </Button>,
       ]}
