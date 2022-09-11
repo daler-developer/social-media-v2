@@ -1,5 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, PreloadedState } from '@reduxjs/toolkit'
 import uiSlice from './slices/ui-slice/uiSlice'
+
+export const setupStore = (preloadedState?: PreloadedState<IRootState>) => {
+  return configureStore({
+    reducer: {
+      ui: uiSlice.reducer,
+    },
+  })
+}
 
 const store = configureStore({
   reducer: {
@@ -8,6 +16,7 @@ const store = configureStore({
 })
 
 export type IRootState = ReturnType<typeof store.getState>
+export type IAppStore = ReturnType<typeof setupStore>
 
 export type AppDispatch = typeof store.dispatch
 

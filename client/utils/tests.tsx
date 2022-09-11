@@ -1,17 +1,43 @@
-import { QueryClientProvider } from '@tanstack/react-query'
-import { render } from '@testing-library/react'
+import { PreloadedState } from '@reduxjs/toolkit'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { render, renderHook } from '@testing-library/react'
+import { ReactElement } from 'react'
 import { Provider } from 'react-redux'
-import store from '../redux/store'
-import queryClient from './queryClient'
+import { IAppStore, setupStore } from 'redux/store'
+import { setupQueryClient } from './queryClient'
 
-const AllTheProviders = ({ children }: any) => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>{children}</Provider>
-    </QueryClientProvider>
-  )
+export const customRender = (
+  ui: ReactElement,
+  {
+    store = setupStore(),
+    queryClient = setupQueryClient(),
+  }: { store?: IAppStore; queryClient?: QueryClient } = {}
+) => {
+  const Wrapper = ({ children }: any) => {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>{children}</Provider>
+      </QueryClientProvider>
+    )
+  }
+
+  return { ...render(ui, { wrapper: Wrapper }), queryClient, store }
 }
 
-export const customRender = (ui: any, options?: object) => {
-  return render(ui, { wrapper: AllTheProviders, ...options })
+export const customRenderHook = <T, V>(
+  hook: any,
+  {
+    store = setupStore(),
+    queryClient = setupQueryClient(),
+  }: { store?: IAppStore; queryClient?: QueryClient } = {}
+) => {
+  const Wrapper = ({ children }: any) => {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>{children}</Provider>
+      </QueryClientProvider>
+    )
+  }
+
+  return { ...renderHook<T, V>(hook, { wrapper: Wrapper }), queryClient, store }
 }

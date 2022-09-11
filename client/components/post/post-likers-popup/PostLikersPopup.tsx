@@ -4,7 +4,7 @@ import { memo, useEffect } from 'react'
 import { IPost } from 'utils/types'
 import NextLink from 'next/link'
 import { useQueryClient } from '@tanstack/react-query'
-import FetchMoreBtn from '@/components/common/fetch-more-btn/FetchMoreBtn'
+import FetchMoreBtn from 'components/common/fetch-more-btn/FetchMoreBtn'
 
 interface IProps {
   isOpen: boolean

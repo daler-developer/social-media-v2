@@ -31,6 +31,7 @@ const CreateCommentModal = () => {
 
   return (
     <Modal
+      data-testid='post-comments-modal'
       title='Comments'
       onCancel={() => modals.closeCurrentActiveModal()}
       visible={modals.isCommentsModalVisible}

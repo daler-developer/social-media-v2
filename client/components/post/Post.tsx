@@ -67,7 +67,10 @@ const Post = ({ post }: IProps) => {
   const shouldShowPopup = isAuthenticated && post.isCreatedByCurrentUser
 
   return (
-    <div className='border border-solid bg-white border-gray-300 rounded-[4px]'>
+    <div
+      role='post'
+      className='border border-solid bg-white border-gray-300 rounded-[4px]'
+    >
       {/* Header */}
       <div className='p-[10px] flex items-center justify-between'>
         <NextLink href={`/users/${post.creator._id}`} passHref>
@@ -77,7 +80,10 @@ const Post = ({ post }: IProps) => {
           </a>
         </NextLink>
         {shouldShowPopup && (
-          <Dropdown overlay={<PopupMenu post={post} />}>
+          <Dropdown
+            data-testid='menu-popup'
+            overlay={<PopupMenu post={post} />}
+          >
             <MenuBtn />
           </Dropdown>
         )}

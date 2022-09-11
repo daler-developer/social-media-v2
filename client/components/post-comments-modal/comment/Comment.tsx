@@ -8,8 +8,8 @@ import { useRef, useState } from 'react'
 import EditForm from './edit-form/EditForm'
 import { formatDate } from 'utils/helpers'
 import NextLink from 'next/link'
-import MenuBtn from '@/components/common/menu-btn/MenuBtn'
-import Avatar from '@/components/avatar/Avatar'
+import MenuBtn from 'components/common/menu-btn/MenuBtn'
+import Avatar from 'components/avatar/Avatar'
 
 interface IProps {
   comment: IComment

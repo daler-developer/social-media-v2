@@ -7,7 +7,9 @@ interface IProps {
 
 const Container = ({ children }: IProps) => {
   return (
-    <div className='max-w-[900px] px-[22px] w-full mx-auto'>{children}</div>
+    <div role='container' className='max-w-[900px] px-[22px] w-full mx-auto'>
+      {children}
+    </div>
   )
 }
 

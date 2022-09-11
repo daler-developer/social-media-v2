@@ -14,17 +14,15 @@ const PopupMenu = ({ post }: IProps) => {
     deletePostMutation.mutate({ postId: post._id })
   }
 
-  const items: any[] = []
-
-  if (post.isCreatedByCurrentUser) {
-    items.push({
+  const items = [
+    {
       key: 1,
       danger: true,
       label: <div onClick={handleDelete}>Delete</div>,
-    })
-  }
+    },
+  ]
 
-  return <Menu items={items} />
+  return <Menu role='menu' items={items} />
 }
 
 export default PopupMenu

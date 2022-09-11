@@ -1,7 +1,7 @@
 import cn from 'classnames'
 import useGetMeQuery from 'hooks/queries/useGetMeQuery'
 import { ReactNode, useState } from 'react'
-import FullScreenLoader from './full-screen-loader/FullScreenLoader'
+import FullScreenLoader from '../full-screen-loader/FullScreenLoader'
 
 interface IProps {
   children: any

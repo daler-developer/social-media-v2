@@ -11,7 +11,11 @@ import LoginModal from '../login-modal/LoginModal'
 
 jest.mock('../../utils/apiClient')
 
-describe('<CreateCommentForm />', () => {
+describe.skip('<CreateCommentForm />', () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   test('should render', () => {
     customRender(<CreateCommentForm postId='asdf' />)
 

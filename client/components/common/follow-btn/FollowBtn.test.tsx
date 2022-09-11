@@ -13,24 +13,4 @@ describe('<FollowBtn />', () => {
 
     expect(screen.queryByRole('button')).toBeInTheDocument()
   })
-
-  test('when clicking should follow user', async () => {
-    ;(apiClient.post as jest.Mock).mockResolvedValue({
-      data: {
-        followed: true,
-      },
-    })
-
-    const followUserSpy = jest.spyOn(usersApi, 'followUser')
-
-    const user = userEvent.setup()
-    customRender(<FollowBtn userId='fakeuserid' />)
-
-    expect(followUserSpy).toBeCalledTimes(0)
-
-    await user.click(screen.getByRole('button'))
-
-    expect(followUserSpy).toBeCalledTimes(1)
-    expect(followUserSpy).toHaveBeenCalledWith({ userId: 'fakeuserid' })
-  })
 })
